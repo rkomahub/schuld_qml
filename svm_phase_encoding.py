@@ -72,15 +72,28 @@ def plot_decision(ax, Xtr, ytr, Xte, yte, c, title, mode="abs2"):
                          np.linspace(x1min, x1max, 250))
     grid = np.c_[xx.ravel(), yy.ravel()]
     Kgrid = kernel_eq7(grid, Xtr, c, mode=mode)
-    Z = clf.predict(Kgrid).reshape(xx.shape)
 
-    ax.contourf(xx, yy, Z, cmap=cmap_regions, alpha=0.6)
+    Z = clf.decision_function(Kgrid) # evaluate f(x) on grid
+    Z = Z.reshape(xx.shape)
+
+    L = np.max(np.abs(Z))  # for color scale
+    levels = np.linspace(-L, L, 11)
+
+    im = ax.contourf(
+        xx, yy, Z,
+        levels=levels,
+        cmap="RdBu_r",
+        alpha=0.85
+    )
+
+    # decision boundary f(x)=0
+    ax.contour(xx, yy, Z, levels=[0], colors="k", linewidths=1.2)
 
     # test points (filled circles)
     ax.scatter(
         Xte[:,0], Xte[:,1],
         c=yte, cmap=cmap_points,
-        s=25, edgecolors="none"
+        s=25, edgecolors="k", linewidths=0.4, alpha=0.8
     )
 
     # training points (crosses)
@@ -98,6 +111,7 @@ def plot_decision(ax, Xtr, ytr, Xte, yte, c, title, mode="abs2"):
     ax.set_xticks([])
     ax.set_yticks([])
     ax.set_aspect("equal")
+    plt.colorbar(im, ax=ax, fraction=0.046)
 
 # ---------- Data + reproduction (row 1) ----------
 def prep_data(generator, n_train, n_test, seed=0):
@@ -115,7 +129,7 @@ datasets = [
 
 fig, axes = plt.subplots(2, 3, figsize=(11, 6))
 plt.subplots_adjust(wspace=0.15, hspace=0.35)
-c0 = 1.0
+c0 = 1.5
 mode = "abs2"  # try "real" if you want the literal overlap (may be less robust)
 
 for j, (name, gen) in enumerate(datasets):
