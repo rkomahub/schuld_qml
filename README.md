@@ -1,10 +1,3 @@
-Absolutely — here is a **single, self-contained `README.md`**, written so that **someone with zero context** can clone the repo and **make the program work on the first try**.
-
-You can copy-paste this **verbatim**.
-
----
-
-```md
 # Fock-Space Quantum Neural Network (Continuous-Variable QML)
 
 This repository implements a **continuous-variable (CV) quantum neural network**
