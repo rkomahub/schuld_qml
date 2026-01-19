@@ -162,21 +162,3 @@ If anything breaks, delete `.venv/` and repeat the setup exactly.
 ## Reproducibility rule
 
 > If it runs once, freeze the environment and never upgrade dependencies.
-
----
-
-## License
-
-Specify if needed (e.g. MIT).
-
-```
-
----
-
-If you want next, I can:
-- annotate `qm_neural_net.py` line-by-line,
-- add a **theory section** matching the paper,
-- or help you turn this into a **thesis-ready numerical experiment**.
-
-You’re officially past the hard part.
-```
